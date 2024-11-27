@@ -22,16 +22,19 @@ namespace Dalamud.FullscreenCutscenes
         private ICommandManager CommandManager { get; init; }   
         private Configuration Configuration { get; init; }
         private ICondition Condition { get; init; }
+        private IPluginLog PluginLog { get; init; }
         public Plugin(
              IDalamudPluginInterface pluginInterface,
              ICommandManager commandManager,
              ISigScanner targetScanner,
              IGameInteropProvider gameInteropProvider,
-             ICondition condition)
+             ICondition condition,
+             IPluginLog pluginLog)
         {
             this.PluginInterface = pluginInterface;
             this.CommandManager = commandManager;
             this.Condition = condition;
+            this.PluginLog = pluginLog;
 
             this.Configuration = this.PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
             this.Configuration.Initialize(this.PluginInterface);
@@ -41,7 +44,7 @@ namespace Dalamud.FullscreenCutscenes
 
             this.CommandManager.AddHandler(commandName, new CommandInfo(OnCommand)
             {
-                HelpMessage = "A useful message to display in /xlhelp"
+                HelpMessage = "/pcutscenes: Toggle the plugin on/off\n/pcutscenes true|false: manually set the plugin state"
             });
 
             if (targetScanner.TryScanText("E8 ?? ?? ?? ?? 48 8B 0D ?? ?? ?? ?? E8 ?? ?? ?? ?? 48 8B 8B ?? ?? ?? ??", out var ptr))
@@ -69,7 +72,7 @@ namespace Dalamud.FullscreenCutscenes
 
         public void Dispose()
         {
-            this.updateLetterboxingHook?.Disable();
+            this.updateLetterboxingHook?.Dispose();
             this.CommandManager.RemoveHandler(commandName);
         }
 
