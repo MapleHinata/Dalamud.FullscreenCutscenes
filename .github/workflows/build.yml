@@ -1,0 +1,41 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.x'
+
+      - name: Download Dalamud
+        run: |
+          wget https://goatcorp.github.io/dalamud-distrib/latest.zip -O /tmp/dalamud.zip
+          mkdir -p $HOME/.xlcore/dalamud/Hooks/dev
+          unzip /tmp/dalamud.zip -d $HOME/.xlcore/dalamud/Hooks/dev/
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore -c Release
+
+      - name: List build output
+        run: find . -name "*.dll" | grep -i fullscreen
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: FullscreenCutscenes
+          path: Dalamud.FullscreenCutscenes/bin/x64/Release/

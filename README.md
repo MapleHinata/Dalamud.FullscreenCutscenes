@@ -1,47 +1,29 @@
-# SamplePlugin
+# Ultrawide Cutscenes
 
-Simple example plugin for Dalamud.
+A [Dalamud](https://github.com/goatcorp/Dalamud) plugin for Final Fantasy XIV that removes the letterboxing bars displayed during cutscenes on ultrawide monitors, allowing cutscenes to fill your full screen.
 
-This is not designed to be the simplest possible example, but it is also not designed to cover everything you might want to do. For more detailed questions, come ask in [the Discord](https://discord.gg/3NMcUV5).
+> **Note:** Because this expands the rendered viewport beyond the game's intended cutscene boundaries, you may occasionally see things you aren't supposed to — NPCs popping in at the edges, T-poses, scene geometry loading, etc. This is expected behavior and not a bug.
 
-## Main Points
+## Requirements
 
-* Simple functional plugin
-  * Slash command
-  * Main UI
-  * Settings UI
-  * Image loading
-  * Plugin json
-* Simple, slightly-improved plugin configuration handling
-* Project organization
-  * Copies all necessary plugin files to the output directory
-    * Does not copy dependencies that are provided by dalamud
-    * Output directory can be zipped directly and have exactly what is required
-  * Hides data files from visual studio to reduce clutter
-    * Also allows having data files in different paths than VS would usually allow if done in the IDE directly
+- [Final Fantasy XIV](https://www.finalfantasyxiv.com/)
+- [XIVLauncher](https://goatcorp.github.io/) with Dalamud enabled
 
+## Usage
 
-The intention is less that any of this is used directly in other projects, and more to show how similar things can be done.
+The plugin is active as soon as it's enabled — there's no configuration required. Letterboxing will be removed automatically whenever a cutscene plays.
 
-## To Use
-### Building
+## Known Limitations
 
-1. Open up `SamplePlugin.sln` in your C# editor of choice (likely [Visual Studio 2022](https://visualstudio.microsoft.com) or [JetBrains Rider](https://www.jetbrains.com/rider/)).
-2. Build the solution. By default, this will build a `Debug` build, but you can switch to `Release` in your IDE.
-3. The resulting plugin can be found at `SamplePlugin/obj/x64/Debug/SamplePlugin.dll` (or `Release` if appropriate.)
+- The expanded viewport may reveal unfinished scene elements at the edges of the screen (NPC pop-in, T-poses, etc.).
+- The plugin requires updates when Dalamud's API version changes; if the plugin stops working after a game or Dalamud update, check here for an updated release.
 
-### Activating in-game
+## Credits
 
-1. Launch the game and use `/xlsettings` in chat or `xlsettings` in the Dalamud Console to open up the Dalamud settings.
-    * In here, go to `Experimental`, and add the full path to the `SamplePlugin.dll` to the list of Dev Plugin Locations.
-2. Next, use `/xlplugins` (chat) or `xlplugins` (console) to open up the Plugin Installer.
-    * In here, go to `Dev Tools > Installed Dev Plugins`, and the `SamplePlugin` should be visible. Enable it.
-3. You should now be able to use `/pmycommand` (chat) or `pmycommand` (console)!
+- **[goaaats](https://github.com/goaaats/Dalamud.FullscreenCutscenes)** — original plugin author
+- **[MapleHinata](https://github.com/MapleHinata/Dalamud.FullscreenCutscenes)** — maintained fork
+- **aers** — discovered the underlying technique that makes this possible
 
-Note that you only need to add it to the Dev Plugin Locations once (Step 1); it is preserved afterwards. You can disable, enable, or load your plugin on startup through the Plugin Installer.
+## License
 
-### Reconfiguring for your own uses
-
-Basically, just replace all references to `SamplePlugin` in all of the files and filenames with your desired name. You'll figure it out 😁
-
-Dalamud will load the JSON file (by default, `Data/SamplePlugin.json`) next to your DLL and use it for metadata, including the description for your plugin in the Plugin Installer. Make sure to update this with information relevant to _your_ plugin!
+This project is licensed under the [AGPL-3.0 License](LICENSE).

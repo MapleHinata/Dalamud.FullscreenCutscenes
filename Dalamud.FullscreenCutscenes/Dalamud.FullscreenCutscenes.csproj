@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Dalamud.NET.Sdk/14.0.1">
+<Project Sdk="Dalamud.NET.Sdk/15.0.0">
   <PropertyGroup>
-    <Authors></Authors>
+   <Authors>goat, Maple, DukePantarei</Authors>
     <Company></Company>
-    <Version>1.0.0.7</Version>
-    <Description>A sample plugin.</Description>
+    <Version>1.0.0.8</Version>
+    <Description>Removes letterboxing bars during cutscenes on ultrawide monitors.</Description>
     <Copyright></Copyright>
-    <PackageProjectUrl>https://github.com/goatcorp/SamplePlugin</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/MapleHinata/Dalamud.FullscreenCutscenes</PackageProjectUrl>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
 </Project>
